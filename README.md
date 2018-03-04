@@ -84,6 +84,8 @@ cor_table <- cor(myTraining[,-53])
 # create correlation plot by using method of "first principal component order"
 corrplot(cor_table, type="lower", method ="color", order="FPC", tl.cex=0.65, tl.col = "black")
 
+![image](https://user-images.githubusercontent.com/34659183/36941875-30d6d172-1f1a-11e8-9c24-781eda03ad51.png)
+
 ## USING DECISION TREES TO PREDICT
 # use "rpart" analysis - recursive partitioning and regression trees
 rm(modRPART1)
