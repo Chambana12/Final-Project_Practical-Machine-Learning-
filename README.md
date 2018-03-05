@@ -1,4 +1,4 @@
-## Final-Project_Practical-Machine-Learning-
+# Final-Project_Practical-Machine-Learning-
 Final Project - Practical Machine Learning
 
 library(ggplot2)
@@ -11,7 +11,7 @@ library(corrplot)
 library(gbm)
 
 ## CLEANING DATA
-# split training data into 2 separate sets: myTraining and myTesting 
+### split training data into 2 separate sets: myTraining and myTesting 
 Training <- read.csv("/Users/markomadunic/Desktop/Data/PRACTICAL MACHINE LEARNING /WEEK 4/data/pml-training.csv")
 Testing <- read.csv("/Users/markomadunic/Desktop/Data/PRACTICAL MACHINE LEARNING /WEEK 4/data/pml-testing.csv")
 
@@ -19,7 +19,7 @@ inTrain <- createDataPartition(y = Training$classe, p = 0.7, list =F)
 myTraining <- Training[inTrain, ]
 myTesting <- Training[-inTrain, ]
 
-# create local data sets of myTraining and myTesting
+## create local data sets of myTraining and myTesting
 myTraining <- tbl_df(myTraining)
 myTesting <- tbl_df(myTesting)
 glimpse(myTraining)
