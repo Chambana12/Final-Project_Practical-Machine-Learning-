@@ -10,7 +10,7 @@ library(corrplot)
 library(gbm)
 
 ## CLEANING DATA
-### split training data into 2 separate sets: myTraining and myTesting 
+### Split training data into 2 separate sets: myTraining and myTesting 
 Training <- read.csv("/Users/markomadunic/Desktop/Data/PRACTICAL MACHINE LEARNING /WEEK 4/data/pml-training.csv")
 Testing <- read.csv("/Users/markomadunic/Desktop/Data/PRACTICAL MACHINE LEARNING /WEEK 4/data/pml-testing.csv")
 
@@ -18,33 +18,33 @@ inTrain <- createDataPartition(y = Training$classe, p = 0.7, list =F)
 myTraining <- Training[inTrain, ]
 myTesting <- Training[-inTrain, ]
 
-## create local data sets of myTraining and myTesting
+### Create local data sets of myTraining and myTesting
 myTraining <- tbl_df(myTraining)
 myTesting <- tbl_df(myTesting)
 glimpse(myTraining)
 glimpse(myTesting)
 
-# only 269 complete cases - many NAs
+### Only 269 complete cases - many NAs
 sum(complete.cases(myTraining))
-# [1] 269
+[1] 269
 
-# breakdown of the classifying variable
+### Breakdown of the classifying variable
 table(myTraining$classe)
 A    B    C    D    E 
 3906 2658 2396 2252 2525 
 
-# REMOVE zero covariates 
-# zeroVar - a vector of logicals for whether the predictor has only one distinct value
-# nzv	- a vector of logicals for whether the predictor is a near zero variance predictor
+### REMOVE zero covariates 
+### zeroVar - a vector of logicals for whether the predictor has only one distinct value
+### nzv	- a vector of logicals for whether the predictor is a near zero variance predictor
 nsv <- nearZeroVar(x = myTraining, saveMetrics = T)
 
-# turn row names into an explicit chr variable
+### Turn row names into an explicit chr variable
 nsv <- nsv %>% add_rownames("variables")
 
 nsv_false <- nsv %>% filter(nzv==FALSE)
 nzv_vars <- as.character(nsv_false$variables)
 
-# select data frames with only columns where nzv==FALSE
+### Select data frames with only columns where nzv==FALSE
 myTraining <- myTraining %>% 
     select(one_of(nzv_vars))
 
@@ -56,15 +56,15 @@ dim(myTraining)
 dim(myTesting)
 [1] 5885   53
 
-# remove first variable X - row index
+### Remove first variable X - row index
 myTraining <- myTraining[,-1]
 myTesting <- myTesting[,-1]
 
-## sapply on myTraining and calculate if % of NAs in each feature is greater than 0.95 respectively. 
-# rationale: variables that contain in excess of 95% NA elements do not contribute any predictive power
+### Sapply on myTraining and calculate if % of NAs in each feature is greater than 0.95 respectively. 
+### Rationale: variables that contain in excess of 95% NA elements do not contribute any predictive power
 NA.95 <- sapply(myTraining, function(x) {mean(is.na(x))}) > 0.95
 
-# results show that 
+### Results show that 
 myTraining <- myTraining[, NA.95==FALSE]
 myTesting <- myTesting[, NA.95==FALSE]
 
@@ -73,21 +73,21 @@ dim(myTraining)
 dim(myTesting)
 [1] 5885   57
 
-# remove first 5 variables that serve as identifiers, not predictors
+### Remove first 5 variables that serve as identifiers, not predictors
 myTraining <- myTraining[,-(1:5)]
 myTesting <- myTesting[,-(1:5)]
 
-## CREATE CORRELATION MATRIX
+## Create CORRELATION MATRIX
 cor_table <- cor(myTraining[,-53])
 
-# create correlation plot by using method of "first principal component order"
+### Create correlation plot by using method of "first principal component order"
 corrplot(cor_table, type="lower", method ="color", order="FPC", tl.cex=0.65, tl.col = "black")
 
 ![image](https://user-images.githubusercontent.com/34659183/36941875-30d6d172-1f1a-11e8-9c24-781eda03ad51.png)
 
 ## To predict "classe" variable, I will use 3 classification methods. 
-# 1. FOR THE FIRST METHOD I USE DECISION TREES
-# use "rpart" analysis - recursive partitioning and regression trees
+## 1. FOR THE FIRST METHOD I USE DECISION TREES
+### Use "rpart" analysis - recursive partitioning and regression trees
 rm(modRPART1)
 set.seed(1234)
 modRPART <- rpart(classe ~., data=myTraining, method="class")
