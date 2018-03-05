@@ -86,8 +86,8 @@ corrplot(cor_table, type="lower", method ="color", order="FPC", tl.cex=0.65, tl.
 
 ![image](https://user-images.githubusercontent.com/34659183/36941875-30d6d172-1f1a-11e8-9c24-781eda03ad51.png)
 
-## To predict classe variable, I will use 3 classification methods. 
-# For the first method I use DECISION TREES
+## To predict "classe" variable, I will use 3 classification methods. 
+# 1. FOR THE FIRST METHOD I USE DECISION TREES
 # use "rpart" analysis - recursive partitioning and regression trees
 rm(modRPART1)
 set.seed(1234)
@@ -97,6 +97,26 @@ fancyRpartPlot(modRPART)
 
 ![image](https://user-images.githubusercontent.com/34659183/36958884-bfcb38b2-1ff3-11e8-908e-1b0fe85793e8.png)
 
+Confusion Matrix and Statistics
+
+          Reference
+Prediction    A    B    C    D    E
+         A 1468  162   21   44    9
+         B   70  682   86  105  106
+         C   51  173  813   87   96
+         D   66   69   80  651   72
+         E   19   53   26   77  799
+
+Overall Statistics
+                                          
+               Accuracy : 0.7499          
+                 95% CI : (0.7386, 0.7609)
+    No Information Rate : 0.2845          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.6836          
+ Mcnemar's Test P-Value : < 2.2e-16       
+
 # E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
 #  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certaainty
 # predicting new values with rPART 
@@ -105,10 +125,30 @@ predRPART <- predict(modRPART, newdata = myTesting, type = "class")
 CM_RPART <- confusionMatrix(predRPART, myTesting$classe)
 CM_RPART
 
+Confusion Matrix and Statistics
+
+          Reference
+Prediction    A    B    C    D    E
+         A 1672    1    0    0    0
+         B    2 1136    4    0    0
+         C    0    2 1019    6    1
+         D    0    0    3  958    0
+         E    0    0    0    0 1081
+
+Overall Statistics
+                                         
+               Accuracy : 0.9968         
+                 95% CI : (0.995, 0.9981)
+    No Information Rate : 0.2845         
+    P-Value [Acc > NIR] : < 2.2e-16      
+                                         
+                  Kappa : 0.9959         
+ Mcnemar's Test P-Value : NA             
+
 # results mapped on a plot matrix
 plot(CM_RPART$table, CM_RPART$byClass, main="Overall Accuracy = 0.7499", color="light blue")
 
-## USING RANDOM FOREST TO PREDICT
+# 2. USING RANDOM FOREST TO PREDICT
 set.seed(1234)
 modRF <- randomForest(classe ~., data = myTraining)
 predRF <- predict(modRF, newdata = myTesting, type = "class")
