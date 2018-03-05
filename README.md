@@ -86,6 +86,7 @@ corrplot(cor_table, type="lower", method ="color", order="FPC", tl.cex=0.65, tl.
 ![image](https://user-images.githubusercontent.com/34659183/36941875-30d6d172-1f1a-11e8-9c24-781eda03ad51.png)
 
 ## To predict "classe" variable, I will use 3 classification methods. 
+
 ## 1. FOR THE FIRST METHOD I USE DECISION TREES
 ### Use "rpart" analysis - recursive partitioning and regression trees
 rm(modRPART1)
@@ -108,9 +109,9 @@ Overall Statistics
 
 
 
-# E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
-#  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certaainty
-# predicting new values with rPART 
+#### E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
+####  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certainty
+#### predicting new values with rPART 
 
 predRPART <- predict(modRPART, newdata = myTesting, type = "class")
 CM_RPART <- confusionMatrix(predRPART, myTesting$classe)
@@ -126,13 +127,13 @@ Overall Statistics
                   Kappa : 0.9959         
  Mcnemar's Test P-Value : NA             
 
-# results mapped on a plot matrix
+### Results mapped on a plot matrix
 plot(CM_RPART$table, CM_RPART$byClass, main="Overall Accuracy = 0.7499", color="light blue")
 
 ![image](https://user-images.githubusercontent.com/34659183/36959325-50fab4fa-1ff6-11e8-9a4d-3d88852bcca3.png)
 
 
-# 2. USING RANDOM FOREST TO PREDICT
+## 2. Use RANDOM FOREST
 set.seed(1234)
 modRF <- randomForest(classe ~., data = myTraining)
 predRF <- predict(modRF, newdata = myTesting, type = "class")
@@ -145,22 +146,22 @@ predRF <- predict(modRF, newdata = myTesting, type = "class")
 CM_RF <- confusionMatrix(predRF, myTesting$classe)
 CM_RF
 
-# results mapped on a plot matrix
+### Results mapped on a plot matrix
 plot(CM_RF$table, CM_RF$byClass, main="Overall Accuracy RF = 0.9969", color="light green")
 
 ![image](https://user-images.githubusercontent.com/34659183/36959279-17f4e1bc-1ff6-11e8-8457-ebe7b30ae4c2.png)
 
 
-## RF 
+#### Alternative RF modeling 
 ctrRF <- trainControl(method="cv", number=3, verboseIter = F)
 modRF1 <- train(classe~., data=myTraining, method="rf", trControl= ctrRF)
 modRF1$finalModel
 plot(modRF)
 
-# GENERALIZED BOOSTSED REGRESSION - 
-# n.trees = 150 (iterations)
-# accuracy of the final model = 95.96%
-# 52 predictors of which 41 had non-zero influence
+## 3. GENERALIZED BOOSTSED REGRESSION - 
+#### n.trees = 150 (iterations)
+#### accuracy of the final model = 95.96%
+#### 52 predictors of which 41 had non-zero influence
 set.seed(1234)
 ctrGBM <- trainControl(method="repeatedcv", number=5, repeats=1)
 modGBM <- train(classe~., method="gbm", data=myTraining, verbose=F, trControl=ctrGBM)
@@ -176,7 +177,7 @@ Overall Statistics
                   Kappa : 0.9555          
  Mcnemar's Test P-Value : 0.0005234       
 
-# predict on the out-of-sample values 
+### Predict on the out-of-sample values 
 predict_gbm <- predict(modGBM, newdata = myTesting)
 CM_GBM <- confusionMatrix(predict_gbm, myTesting$classe)
 CM_GBM
@@ -186,13 +187,13 @@ plot(modGBM)
 
 fin_mod_gbm
 
-# accuracy results mapped on a plot matrix
+### Accuracy results mapped on a plot matrix
 plot(CM_GBM$table, col=CM_GBM$byClass, main="Overall Accuracy GBM = 0.9596", color="pink")
 
 ![image](https://user-images.githubusercontent.com/34659183/36959645-f4184296-1ff7-11e8-9691-852df3c5c248.png)
 
-### FINAL PREDICTION TEST on testing data set
-# based on prediction accuracy of 3 models, I select Random Forrest model to use on the validation set
+## FINAL PREDICTION TEST on testing data set
+### Based on prediction accuracy of 3 models, I select Random Forrest model to use on the validation set
 validat_test <- predict(modRF, newdata = Testing, type="class")
 validat_test
 
