@@ -108,9 +108,9 @@ set.seed(1234)
 modRPART <- rpart(classe ~., data=myTraining, method="class")
 print(modRPART$frame)
 fancyRpartPlot(modRPART)
-
-![image](https://user-images.githubusercontent.com/34659183/36958884-bfcb38b2-1ff3-11e8-908e-1b0fe85793e8.png)
 ```
+![image](https://user-images.githubusercontent.com/34659183/36958884-bfcb38b2-1ff3-11e8-908e-1b0fe85793e8.png)
+
 #### E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
 ####  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certainty
 #### predicting new values with rPART 
@@ -142,9 +142,9 @@ Overall Statistics
 ### Results mapped on a plot matrix
 ```
 plot(CM_RPART$table, CM_RPART$byClass, main="Overall Accuracy = 0.7499", color="light blue")
-
-![image](https://user-images.githubusercontent.com/34659183/36959325-50fab4fa-1ff6-11e8-9a4d-3d88852bcca3.png)
 ```
+![image](https://user-images.githubusercontent.com/34659183/36959325-50fab4fa-1ff6-11e8-9a4d-3d88852bcca3.png)
+
 
 ## 2. Use RANDOM FOREST
 ```
@@ -183,9 +183,8 @@ Overall Statistics
 ### Results mapped on a plot matrix
 ```
 plot(CM_RF$table, CM_RF$byClass, main="Overall Accuracy RF = 0.9969", color="light green")
-
-![image](https://user-images.githubusercontent.com/34659183/36959279-17f4e1bc-1ff6-11e8-8457-ebe7b30ae4c2.png)
 ```
+![image](https://user-images.githubusercontent.com/34659183/36959279-17f4e1bc-1ff6-11e8-8457-ebe7b30ae4c2.png)
 
 #### Alternative RF modeling 
 ```
@@ -230,10 +229,10 @@ Overall Statistics
 predict_gbm <- predict(modGBM, newdata = myTesting)
 CM_GBM <- confusionMatrix(predict_gbm, myTesting$classe)
 CM_GBM
-
+```
 plot(modGBM)
 ![image](https://user-images.githubusercontent.com/34659183/36959527-6b1d67f0-1ff7-11e8-892b-fd501e4b04a5.png)
-
+```
 fin_mod_gbm
 
 Call:
@@ -254,9 +253,9 @@ E    0    1    4    8 2512 0.005148515
 ### Accuracy results mapped on a plot matrix
 ```
 plot(CM_GBM$table, col=CM_GBM$byClass, main="Overall Accuracy GBM = 0.9596", color="pink")
-
-![image](https://user-images.githubusercontent.com/34659183/36959645-f4184296-1ff7-11e8-9691-852df3c5c248.png)
 ```
+![image](https://user-images.githubusercontent.com/34659183/36959645-f4184296-1ff7-11e8-9691-852df3c5c248.png)
+
 ## FINAL PREDICTION TEST on testing data set
 ### Based on prediction accuracy of 3 models, I select Random Forrest model to use on the validation set
 ```
