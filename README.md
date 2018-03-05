@@ -165,8 +165,17 @@ plot(modRF)
 set.seed(1234)
 ctrGBM <- trainControl(method="repeatedcv", number=5, repeats=1)
 modGBM <- train(classe~., method="gbm", data=myTraining, verbose=F, trControl=ctrGBM)
-
 fin_mod_gbm <- modGBM$finalModel
+
+Overall Statistics
+                                          
+               Accuracy : 0.9648          
+                 95% CI : (0.9598, 0.9694)
+    No Information Rate : 0.2845          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.9555          
+ Mcnemar's Test P-Value : 0.0005234       
 
 # predict on the out-of-sample values 
 predict_gbm <- predict(modGBM, newdata = myTesting)
