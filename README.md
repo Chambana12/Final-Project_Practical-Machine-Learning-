@@ -110,17 +110,6 @@ print(modRPART$frame)
 fancyRpartPlot(modRPART)
 
 ![image](https://user-images.githubusercontent.com/34659183/36958884-bfcb38b2-1ff3-11e8-908e-1b0fe85793e8.png)
-
-Overall Statistics
-                                          
-               Accuracy : 0.7499          
-                 95% CI : (0.7386, 0.7609)
-    No Information Rate : 0.2845          
-    P-Value [Acc > NIR] : < 2.2e-16       
-                                          
-                  Kappa : 0.6836          
- Mcnemar's Test P-Value : < 2.2e-16       
-
 ```
 #### E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
 ####  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certainty
@@ -130,15 +119,25 @@ predRPART <- predict(modRPART, newdata = myTesting, type = "class")
 CM_RPART <- confusionMatrix(predRPART, myTesting$classe)
 CM_RPART
 
+Confusion Matrix and Statistics
+
+          Reference
+Prediction    A    B    C    D    E
+         A 1468  162   21   44    9
+         B   70  682   86  105  106
+         C   51  173  813   87   96
+         D   66   69   80  651   72
+         E   19   53   26   77  799
+
 Overall Statistics
-                                         
-               Accuracy : 0.9968         
-                 95% CI : (0.995, 0.9981)
-    No Information Rate : 0.2845         
-    P-Value [Acc > NIR] : < 2.2e-16      
-                                         
-                  Kappa : 0.9959         
- Mcnemar's Test P-Value : NA             
+                                          
+               Accuracy : 0.7499          
+                 95% CI : (0.7386, 0.7609)
+    No Information Rate : 0.2845          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.6836          
+ Mcnemar's Test P-Value : < 2.2e-16  
 ```
 ### Results mapped on a plot matrix
 ```
@@ -160,6 +159,26 @@ modRF1 <- randomForest(classe ~., data = myTraining)
 predRF <- predict(modRF, newdata = myTesting, type = "class")
 CM_RF <- confusionMatrix(predRF, myTesting$classe)
 CM_RF
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction    A    B    C    D    E
+         A 1672    1    0    0    0
+         B    2 1136    4    0    0
+         C    0    2 1019    6    1
+         D    0    0    3  958    0
+         E    0    0    0    0 1081
+
+Overall Statistics
+                                         
+               Accuracy : 0.9968         
+                 95% CI : (0.995, 0.9981)
+    No Information Rate : 0.2845         
+    P-Value [Acc > NIR] : < 2.2e-16      
+                                         
+                  Kappa : 0.9959         
+ Mcnemar's Test P-Value : NA             
 ```
 ### Results mapped on a plot matrix
 ```
@@ -185,6 +204,18 @@ ctrGBM <- trainControl(method="repeatedcv", number=5, repeats=1)
 modGBM <- train(classe~., method="gbm", data=myTraining, verbose=F, trControl=ctrGBM)
 fin_mod_gbm <- modGBM$finalModel
 
+Confusion Matrix and Statistics
+
+          Reference
+Prediction    A    B    C    D    E
+         A 1646   34    0    2    1
+         B   22 1077   28    4   10
+         C    2   27  982   36   10
+         D    2    0   14  917    5
+         E    2    1    2    5 1056
+
+Overall Statistics
+
 Overall Statistics
                                           
                Accuracy : 0.9648          
@@ -204,6 +235,21 @@ plot(modGBM)
 ![image](https://user-images.githubusercontent.com/34659183/36959527-6b1d67f0-1ff7-11e8-892b-fd501e4b04a5.png)
 
 fin_mod_gbm
+
+Call:
+ randomForest(x = x, y = y, mtry = param$mtry) 
+               Type of random forest: classification
+                     Number of trees: 500
+No. of variables tried at each split: 27
+
+        OOB estimate of  error rate: 0.74%
+Confusion matrix:
+     A    B    C    D    E class.error
+A 3901    4    0    0    1 0.001280082
+B   23 2627    7    1    0 0.011662904
+C    0   10 2375   11    0 0.008764608
+D    0    0   28 2221    3 0.013765542
+E    0    1    4    8 2512 0.005148515
 ```
 ### Accuracy results mapped on a plot matrix
 ```
