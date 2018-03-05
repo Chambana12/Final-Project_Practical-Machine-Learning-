@@ -130,7 +130,7 @@ Overall Statistics
 # results mapped on a plot matrix
 plot(CM_RPART$table, CM_RPART$byClass, main="Overall Accuracy = 0.7499", color="light blue")
 
-
+![image](https://user-images.githubusercontent.com/34659183/36959325-50fab4fa-1ff6-11e8-9a4d-3d88852bcca3.png)
 
 # 2. USING RANDOM FOREST TO PREDICT
 set.seed(1234)
