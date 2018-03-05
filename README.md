@@ -1,12 +1,12 @@
 # Final Project: Practical Machine Learning
 
-`library(ggplot2)
-library(caret)
-library(rpart)
-library(rattle)
-library(randomForest)
-library(dplyr)
-library(corrplot)
+`library(ggplot2)  
+library(caret)  
+library(rpart)  
+library(rattle)  
+library(randomForest)  
+library(dplyr)  
+library(corrplot)  
 library(gbm)`
 
 ## CLEANING DATA
