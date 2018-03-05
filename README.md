@@ -130,6 +130,8 @@ Overall Statistics
 # results mapped on a plot matrix
 plot(CM_RPART$table, CM_RPART$byClass, main="Overall Accuracy = 0.7499", color="light blue")
 
+
+
 # 2. USING RANDOM FOREST TO PREDICT
 set.seed(1234)
 modRF <- randomForest(classe ~., data = myTraining)
@@ -145,6 +147,9 @@ CM_RF
 
 # results mapped on a plot matrix
 plot(CM_RF$table, CM_RF$byClass, main="Overall Accuracy RF = 0.9969", color="light green")
+
+![image](https://user-images.githubusercontent.com/34659183/36959279-17f4e1bc-1ff6-11e8-8457-ebe7b30ae4c2.png)
+
 
 ## RF 
 ctrRF <- trainControl(method="cv", number=3, verboseIter = F)
