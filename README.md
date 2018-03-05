@@ -1,5 +1,4 @@
-# Final-Project_Practical-Machine-Learning-
-Final Project - Practical Machine Learning
+# Final Project: Practical Machine Learning
 
 library(ggplot2)
 library(caret)
