@@ -190,6 +190,7 @@ fin_mod_gbm
 # accuracy results mapped on a plot matrix
 plot(CM_GBM$table, col=CM_GBM$byClass, main="Overall Accuracy GBM = 0.9596", color="pink")
 
+![image](https://user-images.githubusercontent.com/34659183/36959645-f4184296-1ff7-11e8-9691-852df3c5c248.png)
 
 ### FINAL PREDICTION TEST on testing data set
 # based on prediction accuracy of 3 models, I select Random Forrest model to use on the validation set
