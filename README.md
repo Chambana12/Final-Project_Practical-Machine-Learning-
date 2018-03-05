@@ -95,6 +95,8 @@ modRPART <- rpart(classe ~., data=myTraining, method="class")
 print(modRPART$frame)
 fancyRpartPlot(modRPART)
 
+![image](https://user-images.githubusercontent.com/34659183/36958884-bfcb38b2-1ff3-11e8-908e-1b0fe85793e8.png)
+
 # E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
 #  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certaainty
 # predicting new values with rPART 
