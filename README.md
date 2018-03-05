@@ -125,7 +125,7 @@ Overall Statistics
 #### E.g., 2 results stand out: If roll_belt > 130 we predict with 99% certainty E class 
 ####  If roll_belt < 130 and pitch_forearm < -34, we predict A class with 99% certainty
 #### predicting new values with rPART 
-
+```
 predRPART <- predict(modRPART, newdata = myTesting, type = "class")
 CM_RPART <- confusionMatrix(predRPART, myTesting$classe)
 CM_RPART
@@ -139,14 +139,16 @@ Overall Statistics
                                          
                   Kappa : 0.9959         
  Mcnemar's Test P-Value : NA             
-
+```
 ### Results mapped on a plot matrix
+```
 plot(CM_RPART$table, CM_RPART$byClass, main="Overall Accuracy = 0.7499", color="light blue")
 
 ![image](https://user-images.githubusercontent.com/34659183/36959325-50fab4fa-1ff6-11e8-9a4d-3d88852bcca3.png)
-
+```
 
 ## 2. Use RANDOM FOREST
+```
 set.seed(1234)
 modRF <- randomForest(classe ~., data = myTraining)
 predRF <- predict(modRF, newdata = myTesting, type = "class")
@@ -158,23 +160,26 @@ modRF1 <- randomForest(classe ~., data = myTraining)
 predRF <- predict(modRF, newdata = myTesting, type = "class")
 CM_RF <- confusionMatrix(predRF, myTesting$classe)
 CM_RF
-
+```
 ### Results mapped on a plot matrix
+```
 plot(CM_RF$table, CM_RF$byClass, main="Overall Accuracy RF = 0.9969", color="light green")
 
 ![image](https://user-images.githubusercontent.com/34659183/36959279-17f4e1bc-1ff6-11e8-8457-ebe7b30ae4c2.png)
-
+```
 
 #### Alternative RF modeling 
+```
 ctrRF <- trainControl(method="cv", number=3, verboseIter = F)
 modRF1 <- train(classe~., data=myTraining, method="rf", trControl= ctrRF)
 modRF1$finalModel
 plot(modRF)
-
+```
 ## 3. GENERALIZED BOOSTSED REGRESSION - 
 #### n.trees = 150 (iterations)
 #### accuracy of the final model = 95.96%
 #### 52 predictors of which 41 had non-zero influence
+```
 set.seed(1234)
 ctrGBM <- trainControl(method="repeatedcv", number=5, repeats=1)
 modGBM <- train(classe~., method="gbm", data=myTraining, verbose=F, trControl=ctrGBM)
@@ -199,12 +204,13 @@ plot(modGBM)
 ![image](https://user-images.githubusercontent.com/34659183/36959527-6b1d67f0-1ff7-11e8-892b-fd501e4b04a5.png)
 
 fin_mod_gbm
-
+```
 ### Accuracy results mapped on a plot matrix
+```
 plot(CM_GBM$table, col=CM_GBM$byClass, main="Overall Accuracy GBM = 0.9596", color="pink")
 
 ![image](https://user-images.githubusercontent.com/34659183/36959645-f4184296-1ff7-11e8-9691-852df3c5c248.png)
-
+```
 ## FINAL PREDICTION TEST on testing data set
 ### Based on prediction accuracy of 3 models, I select Random Forrest model to use on the validation set
 ```
