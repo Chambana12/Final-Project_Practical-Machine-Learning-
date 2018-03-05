@@ -1,13 +1,13 @@
 # Final Project: Practical Machine Learning
 
-`library(ggplot2)  
+```library(ggplot2)  
 library(caret)  
 library(rpart)  
 library(rattle)  
 library(randomForest)  
 library(dplyr)  
 library(corrplot)  
-library(gbm)`
+library(gbm)```
 
 ## CLEANING DATA
 ### Split training data into 2 separate sets: myTraining and myTesting 
