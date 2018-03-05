@@ -183,6 +183,8 @@ CM_GBM <- confusionMatrix(predict_gbm, myTesting$classe)
 CM_GBM
 
 plot(modGBM)
+![image](https://user-images.githubusercontent.com/34659183/36959527-6b1d67f0-1ff7-11e8-892b-fd501e4b04a5.png)
+
 fin_mod_gbm
 
 # accuracy results mapped on a plot matrix
